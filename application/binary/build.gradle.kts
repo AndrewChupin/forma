@@ -28,82 +28,51 @@ androidBinary(
     ),
 
     /**
-     * Version #1. Configuration build types
-     *
-     * Using simple types, pass arguments fo configuration
+     * Only for :binary-debug
      */
     buildConfiguration = BuildConfiguration(
-        BuildType(
-            name = BuildTypeName(
-                id = "debug",
-                suffix = ".debug"
-            ),
-            singingConfig = SigningConfig(
-                name = "Debug",
-                keystore = "debug-keystore.properties"
-            ),
+        name = DebugBuildName(),
+        singinConfig = DebugeSigningConfig(
+            keystoreFile = KeystoreFile("debug-keystore.properties")
         ),
-
-        BuildType(
-            name = BuildTypeName(
-                id = "release",
-                suffix = ".release"
-            ),
-            singingConfig = SigningConfig(
-                name = "Live",
-                keystore = "release-keystore.properties"
-            ),
-            optimizeConfig = OptimizeConfig(
-                othersProguardRules = "proguard-rules.pro",
-                shrinkCode = true,
-                shrinkResorces = true
-            )
-        ),
-
-        BuildType(
-            name = BuildTypeName(
-                id = "custom",
-                suffix = ".custom"
-            ),
-            singingConfig = SigningConfig(
-                name = "Custom",
-                keystore = "debug-keystore.properties"
-            )
+        optimizeConfig = OptimizeConfig(
+            minificationFiles = setOf("proguard-rules.pro"),
+            shrinkCode = true,
+            shrinkResorces = true
         )
     ),
 
     /**
-     * Version #2. Configuration build types
-     *
-     * Using aggregates types which could be encapsulate some boilerplate logic. For example, types names.
+     * Only for :binary-release
      */
     buildConfiguration = BuildConfiguration(
-        DebugBuildType(
-            suffix = ".debug"
-            singingConfig = DebugSigningConfig(
-                keystore = "debug-keystore.properties"
-            ),
+        name = ReleaseBuildName(),
+        singinConfig = ReleaseSigningConfig(
+            keystoreFile = KeystoreFile("release-keystore.properties")
         ),
+        optimizeConfig = OptimizeConfig(
+            minificationFiles = setOf("proguard-rules.pro"),
+            shrinkCode = true,
+            shrinkResorces = true
+        )
+    ),
 
-        ReleaseBuildType(
-            suffix = ".release"
-            singingConfig = ReleaseSigningConfig(
-                keystore = "release-keystore.properties"
-            ),
-            optimizeConfig = OptimizeConfig(
-                othersProguardRules = "proguard-rules.pro",
-                shrinkCode = true,
-                shrinkResorces = true
-            )
-        ),
-
-        CustomBuildType(
+    /**
+     * For :binary-custom
+     */
+    buildConfiguration = BuildConfiguration(
+        name = BuildName(
             name = "custom",
-            suffix = ".custom"
-            signingConfig = SigninConfig(
-                name = "Custom",
-                keystore = "debug-keystore.properties"
-            )
+            appIdSuffix = ".custom"
+        ),
+        singinConfig = SigningConfig(
+            name = "Custom",
+            keystoreFile = KeystoreFile("debug-keystore.properties")
+        ),
+        optimizeConfig = OptimizeConfig(
+            minificationFiles = setOf("proguard-rules.pro"),
+            shrinkCode = true,
+            shrinkResorces = true
         )
     )
 )

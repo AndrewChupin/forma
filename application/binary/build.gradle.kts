@@ -34,11 +34,6 @@ androidBinary(
         name = DebugBuildName(),
         singinConfig = DebugeSigningConfig(
             keystoreFile = KeystoreFile("debug-keystore.properties")
-        ),
-        optimizeConfig = OptimizeConfig(
-            minificationFiles = setOf("proguard-rules.pro"),
-            shrinkCode = true,
-            shrinkResorces = true
         )
     ),
 
@@ -68,11 +63,6 @@ androidBinary(
         singinConfig = SigningConfig(
             name = "Custom",
             keystoreFile = KeystoreFile("debug-keystore.properties")
-        ),
-        optimizeConfig = OptimizeConfig(
-            minificationFiles = setOf("proguard-rules.pro"),
-            shrinkCode = true,
-            shrinkResorces = true
         )
     )
 )
